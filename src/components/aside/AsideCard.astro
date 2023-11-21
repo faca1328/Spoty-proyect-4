@@ -1,0 +1,31 @@
+---
+import type { Playlist } from "../../data/data.ts";
+
+interface Props {
+    playlist: Playlist;
+}
+
+const { playlist } = Astro.props;
+const { id, color, cover, artists, albumId, title } = playlist;
+
+const intl = new Intl.ListFormat("en");
+const showArtist = intl.format(artists);
+---
+
+<a
+    class="playlist-item flex relative py-2 overflow-hidden item-center gap-4 -ml-[4px] pl-1 hover:bg-gray-700"
+    href={`/playlist/${id}`}
+>
+    <picture class="h-12 w-12 flex-none">
+        <img src={cover} class="object-cover w-full h-full rounded" />
+    </picture>
+
+    <div class="flex flex-col flex-auto truncate">
+        <h5 class="text-gray-300">{title}</h5>
+        <p class="text-gray-400">{showArtist}</p>
+    </div>
+</a>
+
+<style>
+
+</style>

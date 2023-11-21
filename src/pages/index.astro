@@ -1,0 +1,25 @@
+---
+import Greeting from "../components/Greeting.svelte";
+import MainCard from "../components/main/MainCard.astro";
+import { playlists } from "../data/data";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Spotify.">
+	<div
+		id="playlist-main"
+		class="relative transition duration-700 bg-gradient-to-t to-green-700 from-60% from-gray-800 pb-4 rounded flex-1"
+	>
+		<div class="relative px-3">
+			<Greeting/>
+
+			<div class="flex flex-wrap gap-4">
+				{playlists.map((playlist) => <MainCard playlist={playlist} />)}
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	
+</style>

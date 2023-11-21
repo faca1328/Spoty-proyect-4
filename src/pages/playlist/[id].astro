@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { allPlaylists, songs } from "../../data/data";
+import AlbumTable from "../../components/AlbumTable.astro";
+
+
+//mismo nombre que el de la pagina
+const { id } = Astro.params;
+const playlist = allPlaylists.find((playlist) => playlist.id === id);
+const playlistSongs = songs.filter(
+	(song) => song.albumId === playlist?.albumId,
+);
+---
+
+<Layout title="Spotify.">
+	<div
+		id="playlist-main"
+		class="relative transition-all duration-700 bg-gradient-to-t to-green-700 from-60% from-gray-800 pb-4 rounded flex-1 overflow-x-hidden"
+		transition:name=`playlist ${id} box`
+	>
+		<header class="flex item-center gap-6 p-4 align-middle">
+			
+			<picture class="aspect-square h-52 w-52">
+				<img
+					src={playlist?.cover}
+					class="object-cover w-fit h-fit rounded"
+					transition:name=`/playlist/${playlist?.id} image`
+				/>
+			</picture>
+			<div class="align-baseline mt-auto">
+				<div class="flex flex-col justify-between">
+					<h2 class="flex flex-1 items-end text-gray-300 ml-1">
+						Playlist
+					</h2>
+					<div>
+						<h1 class="text-5xl font-bold block text-white">
+							{playlist?.title}
+							<span
+								transition:name=`playlist ${playlist?.id} title`
+							></span>
+						</h1>
+					</div>
+					<div
+						transition:name=`playlist ${playlist?.id} artists`
+						class="text-gray-300 ml-1"
+					>
+						<span>{playlist?.artists.join(", ")}</span>
+					</div>
+				</div>
+
+				<div class="flex-1 flex items-end mt-6">
+					<div class="text-sm text-gray-300 font-normal">
+						<p class="ml-1">
+							<span class="text-white"
+								>{playlistSongs.length} canciones</span
+							>, 3 h aproximadamente
+						</p>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="p-6">
+			<AlbumTable songs={playlistSongs} client:load/>
+		</section>
+	</div>
+</Layout>
